@@ -2,12 +2,12 @@
 Lambda Architecture handling latest Tweets about Corona
 
 
-#get started
+  get started
 
-#docker-compose -f docker-compose-expose.yml up
+  'docker-compose -f docker-compose-expose.yml up'
 
-#docker-compose stop
+  'docker-compose stop'
 
-#python twitter_data.py
+  'python twitter_data.py'
 
-#python consumer.py
+  'python consumer.py'
