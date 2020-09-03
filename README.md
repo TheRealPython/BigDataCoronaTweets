@@ -1,7 +1,7 @@
 # BigDataCoronaTweets
 
   `docker network create kafka-network´
-  ´docker-compose -f docker-compose.kafka.yml up -d´
+  ``docker-compose -f docker-compose.kafka.yml up -d´
   ´docker-compose up -d´
 
 stop this sht
