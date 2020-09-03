@@ -16,8 +16,9 @@ auth.set_access_token(access_token, access_token_secret)
 api = tweepy.API(auth) 
 
 def get_twitter_data():
+    print("Requested Data...")
     res = api.search("Corona")
-    print(res)
+    #print(res)
     for i in res:
         #time.sleep(5)
         record = ''
@@ -31,17 +32,18 @@ def get_twitter_data():
         record += ';'
         record += str(i.retweet_count)
         record += ';'
-        print(record)
+        #print(record)
+        print("sending...")
         #producer.send(topic_name, str.encode(record))
         producer.send(topic_name, value=record)
 
 print("works")
 
 producer = KafkaProducer(
-    bootstrap_servers=['localhost:9092'],
+    bootstrap_servers=["kafka:9092"],
     value_serializer=lambda x: dumps(x).encode('utf-8')
 )
-topic_name = 'tweets-lambda1'
+topic_name = 'tweetLambda1'
 
 print("yes")
 
