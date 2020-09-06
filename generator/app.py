@@ -39,7 +39,7 @@ class MyListener(StreamListener):
         
         try:
             tweets = json.loads(data)
-            tweet_data = {"created_at": tweets["created_at"], "user_id" : tweets["user"]["id"], "location" : tweets["user"]["location"]}
+            tweet_data = {"id" : tweets["id"], "created_at": tweets["created_at"], "user_id" : tweets["user"]["id"], "location" : tweets["user"]["location"]}
             print(tweet_data )
             producer.send(TRANSACTIONS_TOPIC, value=tweet_data)
             return tweet_data
