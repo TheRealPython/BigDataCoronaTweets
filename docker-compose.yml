@@ -1,14 +1,12 @@
 version: '3'
-
 services:
-
   generator:
     build: ./generator
     environment:
       KAFKA_BROKER_URL: broker:9092
       TRANSACTIONS_TOPIC: queueing.transactions
       TRANSACTIONS_PER_SECOND: 1000
-
+    command: python3 app.py
   detector:
     build: ./detector
     environment:
@@ -16,7 +14,18 @@ services:
       TRANSACTIONS_TOPIC: queueing.transactions
       LEGIT_TOPIC: streaming.transactions.legit
       FRAUD_TOPIC: streaming.transactions.fraud
-
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    command: python3 app.py
+    depends_on:
+    - db
+  db:
+    image: postgres
+    environment:
+    - POSTGRES_DB=postgres
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
 networks:
   default:
     external:

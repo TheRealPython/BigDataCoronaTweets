@@ -34,3 +34,10 @@ Lambda Architecture handling latest Tweets about Corona
 
 
   `docker-compose stop`
+  
+  
+---------------------------------------------
+# useful links:
+
+https://github.com/juggernaut/nginx-flask-postgres-docker-compose-example
+
