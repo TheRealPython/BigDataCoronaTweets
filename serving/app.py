@@ -39,7 +39,6 @@ class ServingLayer(Base):
 Base.metadata.create_all(engine) 
 metadata = MetaData()  
 
-
 conn.execute('''
     DROP TABLE IF EXISTS "ServingLayer"; 
 

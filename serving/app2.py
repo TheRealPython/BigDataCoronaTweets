@@ -35,7 +35,8 @@ session = Session()
 #Route for the home page where the links to the other pages are shown
 @app.route('/home')
 def home():
-    return render_template("Home.html")
+    x = Query('ServingLayer').all()
+    return str(x)
 
 #Form of the Batch Layer
 class RAW_BL(FlaskForm):
