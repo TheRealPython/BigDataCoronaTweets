@@ -1,6 +1,14 @@
-# BigDataCoronaTweets
+## BigDataCoronaTweets
 
-  `docker network create kafka-network`
+# Prerequisites 
+
+Install Docker (https://www.docker.com/)
+
+Install docker-compose (https://docs.docker.com/compose/install/)
+
+# Getting started 
+
+ `docker network create kafka-network`
   
   
   `docker-compose -f docker-compose.kafka.yml up -d`
