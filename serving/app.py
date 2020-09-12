@@ -5,6 +5,9 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (Column, Date, String, MetaData, Table, Integer, Numeric, BigInteger)
 
+
+
+
 #Postgre relevant enviroment variables
 user = os.environ['POSTGRES_USER']
 pwd = os.environ['POSTGRES_PASSWORD']
@@ -29,28 +32,43 @@ class ServingLayer(Base):
     location = Column(String, primary_key = True)
     count = Column(Integer)
 
-class RAW_BL(Base):
-    __tablename__ = 'RAW_BL'
-    id = Column(String, primary_key = True)
-    date = Column(Date)
-    user_id = Column(String)
-    location = Column(String)
-
 Base.metadata.create_all(engine) 
 metadata = MetaData()  
+def check_connection():
+    try:
+        conn.execute('''
+            DROP TABLE IF EXISTS "ServingLayer"; 
 
+            SELECT 
+                *
+            INTO 
+                "ServingLayer"
+            FROM 
+                "BatchLayer" ;
+        ''')
+        session.commit()
+    except:
+        print('Test')
 
-conn.execute('''
-    DROP TABLE IF EXISTS "ServingLayer"; 
+check_connection()
 
-    SELECT 
-         *
-    INTO 
-        "ServingLayer"
-    FROM 
-        "BatchLayer" ;
- ''')
-
-session.commit()
 
 print(1234)
+
+
+
+# import json
+# import redis
+# from datetime import datetime
+# from flask import Flask, request
+
+# from .models import Question
+
+# app = Flask(__name__)
+
+# r = redis.Redis(host='cache', port=6379, db=0)
+
+
+
+
+# print(1234)
