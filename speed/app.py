@@ -1,32 +1,44 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode
 from pyspark.sql.functions import split
+# from pyspark.streaming.kafka import KafkaUtils
+# from pyspark.streaming.kafka
 import time
 
 spark = SparkSession \
     .builder \
-    .config("spark.sql.shuffle.partitions","2") \
-    .appName("DerInderGenerator") \
+    .appName("bigdatacoronatweets_broker_1") \
     .getOrCreate()
+#    .config("spark.sql.shuffle.partitions","2") \
 
+#https://spark.apache.org/docs/1.4.1/streaming-kafka-integration.html
+
+# kafkaStream = KafkaUtils.createStream(streamingContext, \
+#     [ZK quorum], [consumer group id], [per-topic number of Kafka partitions to consume])
+
+# directKafkaStream = KafkaUtils.createDirectStream(ssc, "queueing.transactions", {"metadata.broker.list": 'broker:9092'})
+
+# for e in directKafkaStream:
+#     print(e)
 # Create DataFrame representing the stream of input lines from connection to localhost:9092
 data_stream = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "broker:9092") \
   .option("subscribe", "queueing.transactions") \
-  .option("startingOffsets","earliest") \
   .load()
+  #.option("startingOffsets","earliest") \
 
 # Split the datastream into words
 words = data_stream.select(
    explode(
-       split(data_stream.value, " ")
+       split(data_stream.value, ";")
    ).alias("word")
 )
 
 # Generate running word count
 wordCounts = words.groupBy("word").count()
+print(wordCounts)
 
  # Start running the query that prints the running counts to the console
 query = wordCounts \

@@ -35,6 +35,7 @@ session = Session()
 
 conn = engine.connect()
 conn.execute('DROP TABLE if EXISTS "BatchLayer"')
+# RAW_BL auch droppen
 
 class BatchLayer(Base):
     __tablename__ = 'BatchLayer'
