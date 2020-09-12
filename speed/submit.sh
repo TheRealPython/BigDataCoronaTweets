@@ -2,6 +2,8 @@
 
 export SPARK_MASTER_URL=spark://${SPARK_MASTER_NAME}:${SPARK_MASTER_PORT}
 export SPARK_HOME=/spark
+export SPARK_SUBMIT_ARGS="--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0"
+export SPARK_APPLICATION_ARGS="-u"
 
 /wait-for-step.sh
 
@@ -9,9 +11,9 @@ export SPARK_HOME=/spark
 /execute-step.sh
 
 
-cd /app 
-pip3 install -r requirements.txt
-cd ..
+# cd /app 
+# pip3 install -r requirements.txt
+# cd ..
 
 if [ -f "${SPARK_APPLICATION_JAR_LOCATION}" ]; then
     echo "Submit application ${SPARK_APPLICATION_JAR_LOCATION} with main class ${SPARK_APPLICATION_MAIN_CLASS} to Spark master ${SPARK_MASTER_URL}"

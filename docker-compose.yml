@@ -33,15 +33,6 @@ services:
   #   command: python3 -u app.py
   #   depends_on:
   #   - db
-  serving:
-    build: ./serving
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    command: python3 -u app.py
-    depends_on:
-    - db   
   db:
     image: postgres
     environment:
