@@ -5,9 +5,9 @@ import time
 
 spark = SparkSession \
     .builder \
-    .config("spark.sql.shuffle.partitions","2") \
-    .appName("DerInderGenerator") \
+    .appName("bigdatacoronatweets_broker_1") \
     .getOrCreate()
+   # .config("spark.sql.shuffle.partitions","2") \
 
 # Create DataFrame representing the stream of input lines from connection to localhost:9092
 data_stream = spark \
@@ -15,8 +15,8 @@ data_stream = spark \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "broker:9092") \
   .option("subscribe", "queueing.transactions") \
-  .option("startingOffsets","earliest") \
   .load()
+  #.option("startingOffsets","earliest") \
 
 # Split the datastream into words
 words = data_stream.select(
