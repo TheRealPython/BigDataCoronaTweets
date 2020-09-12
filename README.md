@@ -25,7 +25,7 @@ Shut down
 
  `docker-compose down`
  
- `docker-compose -f docker-compose.kafka.yml`
+ `docker-compose -f docker-compose.kafka.yml down`
 
  `docker network rm kafka-network`
 

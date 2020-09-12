@@ -77,8 +77,8 @@ print(1234)
 
 # app = Flask(__name__)
 
-# r = redis.Redis(host='cache', port=6379, db=0)
-
+conn.execute('''
+    DROP TABLE IF EXISTS "ServingLayer"; 
 
 
 
