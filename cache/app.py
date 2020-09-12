@@ -1,9 +1,9 @@
-import os
-import time
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import (Column, Date, String, MetaData, Table, Integer, Numeric, BigInteger)
+# import os
+# import time
+# from sqlalchemy import create_engine
+# from sqlalchemy.orm import scoped_session, sessionmaker
+# from sqlalchemy.ext.declarative import declarative_base
+# from sqlalchemy import (Column, Date, String, MetaData, Table, Integer, Numeric, BigInteger)
 
 
 
@@ -57,30 +57,47 @@ from sqlalchemy import (Column, Date, String, MetaData, Table, Integer, Numeric,
 
 
 
+# import json
+# import redis
+# from datetime import datetime
+# from flask import Flask, request
+# from flask_caching import Cache
+# #from .models import Question
+
+# config = {
+#     "DEBUG": True,          # some Flask specific configs
+#     "CACHE_TYPE": "simple", # Flask-Caching related configs
+#     "CACHE_DEFAULT_TIMEOUT": 300
+# }
+
+# app = Flask(__name__)
+# app.config.from_mapping(config)
+# cache = Cache(app)
+
+# print(1234)
+
+# r = redis.Redis(host='redis', port=6379, db=0)
 import json
 import redis
 from datetime import datetime
 from flask import Flask, request
-from flask_caching import Cache
+
 #from .models import Question
 
-config = {
-    "DEBUG": True,          # some Flask specific configs
-    "CACHE_TYPE": "simple", # Flask-Caching related configs
-    "CACHE_DEFAULT_TIMEOUT": 300
-}
-
 app = Flask(__name__)
-app.config.from_mapping(config)
-cache = Cache(app)
 
-print(1234)
+r = redis.Redis(host='cache', port=6379, db=0)
 
-r = redis.Redis(host='redis', port=6379, db=0)
+# cache = Cache(config={'CACHE_TYPE': "redis",
+#                       'CACHE_REDIS_HOST': "redis",
+#                       'CACHE_REDIS_PORT': 6379
+#                     })
 
 @app.route('/')
-def hello_world():
-    return 'Hello, World!'
+def one():
+    print("yes")
+    return ("Hello World")
+
 @app.route('/visitor')
 def visitor():
     redis.incr('visitor')
@@ -91,6 +108,11 @@ def reset_visitor():
     redis.set('visitor', 0)
     visitor_num = redis.get('visitor').decode("utf-8")
     return "Visitor is reset to %s" % (visitor_num)
+
+# @app.route('/')
+# def hello_world():
+#     return 'Hello, World!'
+
 
 
 

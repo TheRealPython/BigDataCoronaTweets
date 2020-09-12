@@ -32,8 +32,8 @@ class ServingLayer(Base):
     location = Column(String, primary_key = True)
     count = Column(Integer)
 
-Base.metadata.create_all(engine) 
-metadata = MetaData()  
+Base.metadata.create_all(engine)
+metadata = MetaData()
 def check_connection():
     try:
         conn.execute('''

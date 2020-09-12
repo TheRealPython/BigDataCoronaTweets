@@ -55,8 +55,6 @@ services:
       - 8000:8000
     environment:
       - FLASK_APP=app.py
-    env_file:
-      - env.list
     depends_on:
       - db
   cache:
