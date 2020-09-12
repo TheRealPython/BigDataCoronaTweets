@@ -57,13 +57,17 @@ services:
       - FLASK_APP=app.py
     depends_on:
       - db
-  cache:
-    image: redis
-    command: redis-server --appendonly yes
-    volumes:
-      - redis_data:/data
-volumes:
-  redis_data:
+  # cache:
+  #   image: redis
+  #   command: redis-server --appendonly yes
+  #   volumes:
+  #     - redis_data:/data
+  redis:
+    image: "redis:latest"
+    ports:
+      - '6379:6379'
+# volumes:
+#   redis_data:
 networks:
   default:
     external:
