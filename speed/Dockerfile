@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # #ARG ubuntu_version=18.04
 # #FROM ubuntu:${ubuntu_version}
 # #Use ubuntu 18:04 as your base image
@@ -59,5 +60,34 @@ RUN cd /spark && ./bin/spark-submit /usr/app/app.py --packages org.apache.spark:
 # ADD ./requirements.txt ./
 # RUN pip install -r requirements.txt
 # ADD ./ ./
+=======
+FROM bde2020/spark-submit:2.4.5-hadoop2.7
 
+LABEL maintainer="Sven Metzger <sven.metzger@kybeidos.de>"
+
+COPY template.sh /
+>>>>>>> Stashed changes
+
+# Copy the requirements.txt first, for separate dependency resolving and downloading
+COPY requirements.txt /app/
+RUN cd /app \
+      && pip3 install -r requirements.txt
+
+# Copy the source code
+COPY . /app
+
+CMD ["/bin/bash", "/template.sh"]
+
+# FROM python:3.6
+
+# WORKDIR /usr/app
+
+# RUN apt-get update
+# RUN apt-get install default-jdk -y
+
+# RUN apt-get install spark -y
+
+# ADD ./requirements.txt ./
+# RUN pip install -r requirements.txt
+# ADD ./ ./
 

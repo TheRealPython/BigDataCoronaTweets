@@ -1,0 +1,11 @@
+version: "2"
+services: 
+    spark-app:
+        image: bde/spark-app
+        container_name: spark-app
+        environment: 
+            - "SPARK_MASTER=spark://spark-master:7077"
+networks:
+    default:
+        external:
+            name: kafka-network

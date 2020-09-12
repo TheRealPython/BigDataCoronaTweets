@@ -5,6 +5,9 @@ from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (Column, Date, String, MetaData, Table, Integer, Numeric, BigInteger)
 
+
+
+
 #Postgre relevant enviroment variables
 user = os.environ['POSTGRES_USER']
 pwd = os.environ['POSTGRES_PASSWORD']
@@ -36,20 +39,11 @@ class ServingLayer(Base):
 #     user_id = Column(String)
 #     location = Column(String)
 
-Base.metadata.create_all(engine) 
-metadata = MetaData()  
+# app = Flask(__name__)
 
 conn.execute('''
     DROP TABLE IF EXISTS "ServingLayer"; 
 
-    SELECT 
-         *
-    INTO 
-        "ServingLayer"
-    FROM 
-        "BatchLayer" ;
- ''')
 
-session.commit()
 
-print(1234)
+# print(1234)
