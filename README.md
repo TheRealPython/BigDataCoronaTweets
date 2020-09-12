@@ -17,6 +17,9 @@ Install docker-compose (https://docs.docker.com/compose/install/)
   
   
   `docker-compose up -d`
+  
+Open a browser window
+`http://localhost:8000/`
 
 Shut down
 
@@ -27,24 +30,6 @@ Shut down
  `docker network rm kafka-network`
 
 
-
----------------------------------------------------------------
-
-deprecated
-
-Lambda Architecture handling latest Tweets about Corona
-
-
-  get started
-
-  `docker-compose -f docker-compose-expose.yml up`
-  
-  `python twitter_data.py`
-
-  `python consumer.py`
-
-
-  `docker-compose stop`
   
   
 ---------------------------------------------
