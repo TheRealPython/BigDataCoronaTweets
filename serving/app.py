@@ -77,9 +77,9 @@ print(1234)
 
 # app = Flask(__name__)
 
-conn.execute('''
-    DROP TABLE IF EXISTS "ServingLayer"; 
+# conn.execute('''
+#     DROP TABLE IF EXISTS "ServingLayer"; 
 
 
 
-# print(1234)
+# # print(1234)

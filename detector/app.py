@@ -111,7 +111,7 @@ def excecute_batch_layer(intervall=60):
         compute_data()
         print("sleeping ....")
 
-excecute_batch_layer(10)
+excecute_batch_layer(50)
 # if __name__ == '__main__':
     
 #     print("-----------------------------------------------------------------------------")
