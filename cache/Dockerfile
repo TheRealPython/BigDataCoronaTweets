@@ -1,8 +1,9 @@
 FROM python:3.6-slim
-WORKDIR /srv
 
-ADD ./requirements.txt /srv/requirements.txt
+WORKDIR /usr/app
+
+ADD ./requirements.txt ./
 
 RUN pip install -r requirements.txt
 
-ADD . /srv
+ADD ./ ./

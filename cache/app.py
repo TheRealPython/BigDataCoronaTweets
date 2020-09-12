@@ -20,7 +20,8 @@ cache = Cache(config={'CACHE_TYPE': "redis",
 
 #Initiate Flask App + Cache
 app = Flask(__name__)
-cache.init_app(app)
+#cache.init_app(app)
+app.debug=True
 
 #Postgre relevant enviroment variables
 user = os.environ['POSTGRES_USER']
@@ -33,7 +34,7 @@ port = '5432'
 #engine creation for postgres connection
 engine = create_engine('postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, db)) 
 Base = declarative_base()
-Session = sessionmaker(bind=engine, autoflush=True)
+Session = sessionmaker(bind=engine, autoflush=False, autocommit=False)
 Session.configure(bind=engine)
 session = Session()
 
@@ -65,7 +66,9 @@ metadata = MetaData()
 def home(): 
     #some_profile = session.query(Profile).filter(Profile.id == req).first()
     #x = session.query(ServingLayer.location, ServingLayer.count).orderby(ServingLayer.count.desc()).limit(10).all() 
-    result = session.query(ServingLayer).all()
+    result = session.query(BatchLayer).all()
+    print(result)
+    print("Hi")
     y=0
     lana = []
     for row in result:
@@ -76,6 +79,7 @@ def home():
             lana.append(row.count)
         else:
             break
+    session.commit()
     return str(lana)
 
 
