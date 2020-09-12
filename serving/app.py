@@ -29,12 +29,12 @@ class ServingLayer(Base):
     location = Column(String, primary_key = True)
     count = Column(Integer)
 
-class RAW_BL(Base):
-    __tablename__ = 'RAW_BL'
-    id = Column(String, primary_key = True)
-    date = Column(Date)
-    user_id = Column(String)
-    location = Column(String)
+# class RAW_BL(Base):
+#     __tablename__ = 'RAW_BL'
+#     id = Column(String, primary_key = True)
+#     date = Column(Date)
+#     user_id = Column(String)
+#     location = Column(String)
 
 Base.metadata.create_all(engine) 
 metadata = MetaData()  
