@@ -55,6 +55,9 @@ services:
       - 8000:8000
     environment:
       - FLASK_APP=app.py
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
   # cache:

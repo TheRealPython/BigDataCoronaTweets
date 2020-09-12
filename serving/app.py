@@ -27,6 +27,11 @@ session = Session()
 
 conn = engine.connect()
 
+class BatchLayer(Base):
+    __tablename__ = 'BatchLayer'
+    location = Column(String, primary_key = True)
+    count = Column(Integer)
+
 class ServingLayer(Base):
     __tablename__ = 'ServingLayer'
     location = Column(String, primary_key = True)
@@ -34,8 +39,10 @@ class ServingLayer(Base):
 
 Base.metadata.create_all(engine)
 metadata = MetaData()
+
 def check_connection():
     try:
+        print("yayy")
         conn.execute('''
             DROP TABLE IF EXISTS "ServingLayer"; 
 
@@ -50,7 +57,11 @@ def check_connection():
     except:
         print('Test')
 
-check_connection()
+while True:
+    print("ola")
+    check_connection()
+    time.sleep(3)
+    print("ola2")
 
 
 print(1234)
