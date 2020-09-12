@@ -6,9 +6,12 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import (Column, Date, String, MetaData, Table, Integer, Numeric, BigInteger)
 
 #Postgre relevant enviroment variables
-user = os.environ['POSTGRES_USER']
-pwd = os.environ['POSTGRES_PASSWORD']
-db = os.environ['POSTGRES_DB']
+#user = os.environ['POSTGRES_USER']
+#pwd = os.environ['POSTGRES_PASSWORD']
+#db = os.environ['POSTGRES_DB']
+user = 'postgres'
+pwd = 'postgres'
+db = 'postgres'
 host = 'db'
 port = '5432'
 
@@ -36,12 +39,7 @@ class RAW_BL(Base):
     user_id = Column(String)
     location = Column(String)
 
-
-
-
-
-
-curs.execute(""" 
+conn.execute(""" 
     DROP TABLE IF EXISTS serving_layer_temp; 
 
     SELECT 
@@ -85,5 +83,6 @@ curs.execute("""
     rename to serving_layer ;        
     
 """)
-conn.commit()
-conn.close()
+session.commit()
+
+print()
