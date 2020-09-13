@@ -10,3 +10,7 @@ RUN pip install -r /app/requirements.txt
 ENV SPARK_APPLICATION_PYTHON_LOCATION /app/app.py
 
 CMD ["/bin/bash", "/template.sh"]
+
+
+# docker build -t bde/spark-app .
+# docker run --network=kafka-network --link spark-master:spark-master -e ENABLE_INIT_DAEMON=false bde/spark-app

@@ -15,8 +15,8 @@ Install docker-compose (https://docs.docker.com/compose/install/)
   
   `docker-compose -f docker-compose.kafka.yml up -d`
   
-  
-  `docker-compose up -d`
+  `docker-compose up --scale web=2`
+  (`docker-compose up -d`)
   
 Open a browser window
 `http://localhost:8000/`
@@ -36,5 +36,9 @@ Shut down
 # useful links:
 
 https://github.com/juggernaut/nginx-flask-postgres-docker-compose-example
+
+# Possible Issues
+
+Incomplete Read Error: https://github.com/tweepy/tweepy/issues/448
 
 by Ruben Härle, Tim Kauer, Jannik Kuom and Sven Metzger

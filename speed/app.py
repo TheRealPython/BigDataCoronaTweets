@@ -1,6 +1,7 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode
 from pyspark.sql.functions import split
+import logging
 # from pyspark.streaming.kafka import KafkaUtils
 # from pyspark.streaming.kafka
 import time
@@ -11,15 +12,7 @@ spark = SparkSession \
     .getOrCreate()
 #    .config("spark.sql.shuffle.partitions","2") \
 
-#https://spark.apache.org/docs/1.4.1/streaming-kafka-integration.html
 
-# kafkaStream = KafkaUtils.createStream(streamingContext, \
-#     [ZK quorum], [consumer group id], [per-topic number of Kafka partitions to consume])
-
-# directKafkaStream = KafkaUtils.createDirectStream(ssc, "queueing.transactions", {"metadata.broker.list": 'broker:9092'})
-
-# for e in directKafkaStream:
-#     print(e)
 # Create DataFrame representing the stream of input lines from connection to localhost:9092
 data_stream = spark \
   .readStream \
@@ -47,6 +40,8 @@ query = wordCounts \
     .trigger(processingTime='60 seconds') \
     .format("console") \
     .start()
+
+
 
 query.awaitTermination()
 
