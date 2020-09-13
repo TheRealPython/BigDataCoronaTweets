@@ -16,10 +16,9 @@ Install docker-compose (https://docs.docker.com/compose/install/)
   `docker-compose -f docker-compose.kafka.yml up -d`
   
   `docker-compose up --scale web=2`
-  (`docker-compose up -d`)
   
 Open a browser window
-`http://localhost:8000/`
+`http://localhost:8080/home`
 
 Shut down
 
