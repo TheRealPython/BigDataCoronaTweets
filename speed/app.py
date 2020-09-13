@@ -6,6 +6,8 @@ from pyspark.sql import Row
 from pyspark.sql.functions import expr 
 import time
 from pyspark.sql.functions import from_json, col
+from pyspark.sql.types import *
+from datetime import datetime
 
 spark = SparkSession \
     .builder \
@@ -15,7 +17,7 @@ spark = SparkSession \
 
 
 # Create DataFrame representing the stream of input lines from connection to localhost:9092
-data_stream = spark \
+data_stream_Raw = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "broker:9092") \
@@ -57,14 +59,22 @@ tweet = Row("id", "created_at", "user_id", "location")
 #     .toDF("list", "id", "created_at", "user_id", "location") 
 
 
+struct = StructType([
+    StructField("id", StringType()),
+    StructField("created_at", StringType()),
+    StructField("user_id", StringType()),
+    StructField("location", StringType()),
+])
 
+data_stream = data_stream_Raw.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
 
-json_schema = spark.read.json(data_stream.rdd.map(lambda row: row.json)).schema
-data_stream.withColumn('value', from_json(col('value'), json_shema))
+data_stream_Parsed = data_stream.select(from_json("value", struct).alias("message"))
 
+messageFlattenedDF = data_stream_Parsed.selectExpr("message.id", "message.created_at", "message.user_id", "message.location")
 
+df = messageFlattenedDF.groupBy("location").count()
 
-
+# messageFlattenedDF.show()
 
 
     # .selectExpr("CAST(value AS STRING) as string_value") \
@@ -80,7 +90,7 @@ data_stream.withColumn('value', from_json(col('value'), json_shema))
     # .groupBy("location") \
     # .agg(count("id"), max("user_id"))  
 
-query = df.writeStream \
+query = messageFlattenedDF.writeStream \
     .format("memory") \
     .queryName("SpeedLayer") \
     .trigger(processingTime='60 seconds') \
