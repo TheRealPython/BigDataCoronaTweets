@@ -60,7 +60,7 @@ def check_connection():
 while True:
     print("ola")
     check_connection()
-    time.sleep(3)
+    time.sleep(30)
     print("ola2")
 
 
