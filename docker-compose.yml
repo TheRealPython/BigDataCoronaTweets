@@ -39,11 +39,19 @@ services:
     - POSTGRES_DB=postgres
     - POSTGRES_USER=postgres
     - POSTGRES_PASSWORD=postgres
+  loadbalancer:
+    image: nginx:alpine
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx-load-balancer.conf:/etc/nginx/nginx.conf
+    links:
+      - web
+    depends_on:
+      - web
   web:
     build: ./cache
-    command: python -u -m flask run --host=0.0.0.0 --port=8000
-    ports:
-      - 8000:8000
+    command: python -u -m flask run --host=0.0.0.0 --port=8080
     environment:
       - FLASK_APP=app.py
       - POSTGRES_DB=postgres
@@ -51,17 +59,11 @@ services:
       - POSTGRES_PASSWORD=postgres
     depends_on:
       - db
-  # cache:
-  #   image: redis
-  #   command: redis-server --appendonly yes
-  #   volumes:
-  #     - redis_data:/data
   redis:
     image: "redis:latest"
     ports:
       - '6379:6379'
-# volumes:
-#   redis_data:
+
 networks:
   default:
     external:
