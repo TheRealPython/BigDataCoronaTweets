@@ -2,7 +2,7 @@
 
 export SPARK_MASTER_URL=spark://${SPARK_MASTER_NAME}:${SPARK_MASTER_PORT}
 export SPARK_HOME=/spark
-export SPARK_SUBMIT_ARGS="--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0"
+export SPARK_SUBMIT_ARGS="--packages org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0,org.postgresql:postgresql:42.2.16"
 export SPARK_APPLICATION_ARGS="-u"
 
 /wait-for-step.sh
