@@ -58,28 +58,10 @@ def check_connection():
         print('Test')
 
 while True:
-    print("ola")
+    print("Start loop to merge data...")
     check_connection()
     time.sleep(30)
-    print("ola2")
+    print("Data merged")
 
-
+print("Code in Serving Layer exited")
 print(1234)
-
-
-
-# import json
-# import redis
-# from datetime import datetime
-# from flask import Flask, request
-
-# from .models import Question
-
-# app = Flask(__name__)
-
-# conn.execute('''
-#     DROP TABLE IF EXISTS "ServingLayer"; 
-
-
-
-# # print(1234)
