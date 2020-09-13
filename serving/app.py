@@ -37,6 +37,11 @@ class ServingLayer(Base):
     location = Column(String, primary_key = True)
     count = Column(Integer)
 
+class speedlayer(Base):
+    __tablename__ = 'speedlayer'
+    location = Column(String, primary_key = True)
+    count = Column(Integer)
+
 Base.metadata.create_all(engine)
 metadata = MetaData()
 
@@ -44,15 +49,25 @@ def check_connection():
     try:
         print("yayy")
         conn.execute('''
-            DROP TABLE IF EXISTS "ServingLayer"; 
-
-            SELECT 
-                *
-            INTO 
+            batch_result as (SELECT
+            "location", SUM("count") "count"
+            FROM
+            (
+                SELECT "location", "count"
+                FROM "BatchLayer"
+                UNION ALL
+                SELECT "location", "count"
+                FROM "speedlayer"
+                ) t
+                GROUP BY "location")
+                select *
+                INTO
                 "ServingLayer"
-            FROM 
-                "BatchLayer" ;
-        ''')
+                FROM
+                batch_result
+                ORDER BY
+                "count"
+                DESC; ''')
         session.commit()
     except:
         print('Test')

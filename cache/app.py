@@ -44,7 +44,7 @@ while (x==False):
         #DB started
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
-        BatchLayer = Base.classes.BatchLayer
+        BatchLayer = Base.classes.speedlayer
         x = True
     except:
         #DB not started yet
