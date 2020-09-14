@@ -38,10 +38,9 @@ class MyListener(StreamListener):
         )
         
         try:
+            # try sending data to topic
             tweets = json.loads(data)
             tweet_data = {"id" : tweets["id"], "created_at": tweets["created_at"], "user_id" : tweets["user"]["id"], "location" : tweets["user"]["location"]}
-            #print(tweet_data )
-            #print("..")
             producer.send(TRANSACTIONS_TOPIC, value=tweet_data)
             return tweet_data
             
@@ -53,7 +52,7 @@ class MyListener(StreamListener):
         print(status)
         return True
 
-
+# executing Stream
 twitter_stream = Stream(auth, MyListener())
 twitter_stream.filter(track=['Corona', "Covid-19"])
 

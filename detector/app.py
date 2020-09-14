@@ -35,7 +35,7 @@ session = Session()
 
 conn = engine.connect()
 conn.execute('DROP TABLE if EXISTS "BatchLayer"')
-# RAW_BL auch droppen
+
 
 class BatchLayer(Base):
     __tablename__ = 'BatchLayer'
@@ -65,7 +65,6 @@ def safe_data_to_db(intervall=60):
     # Safe RAW Data to DB
     timestamp = time.time()
     for message in consumer:
-        #print(".")
         transaction = message.value
         #print(transaction)  # DEBUG
         session.add(RAW_BL(id=transaction["id"], date=transaction["created_at"], user_id=transaction["user_id"], location=transaction["location"]))
@@ -113,25 +112,3 @@ def excecute_batch_layer(intervall=60):
         print("sleeping ....")
 
 excecute_batch_layer(50)
-# if __name__ == '__main__':
-    
-#     print("-----------------------------------------------------------------------------")
-#     time.sleep(10)
-#     for message in consumer:
-#         transaction = message.value
-#         print(type(transaction))
-#         topic = TRANSACTIONS_TOPIC
-#         #topic = FRAUD_TOPIC if is_suspicious(transaction) else LEGIT_TOPIC
-#         # producer.send(topic, value=transaction)
-#         print(topic, transaction)  # DEBUG
-#         session.add(BatchLayer(id=transaction["id"], date=transaction["created_at"], user_id=transaction["user_id"], location=transaction["location"]))
-#         session.commit()
-
-
-# psql --host=db --username=postgres --dbname=postgres
-
-# CREATE TABLE SpeedLayer (
-#    id VARCHAR,
-#     
-
-# );

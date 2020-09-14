@@ -2,13 +2,14 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import explode
 from pyspark.sql.functions import split
 from pyspark.sql.functions import translate
+from pyspark.sql.functions import current_date
 from pyspark.sql import Row
 from pyspark.sql.functions import expr 
 import time
 from pyspark.sql.functions import from_json, col
 from pyspark.sql.types import *
-from datetime import datetime
 
+#starting Spark Session
 spark = SparkSession \
     .builder \
     .appName("bigdatacoronatweets_broker_1") \
@@ -27,6 +28,7 @@ data_stream_Raw = spark \
 
 tweet = Row("id", "created_at", "user_id", "location")
 
+# StructType for encoding JSON from Kafka Stream
 struct = StructType([
     StructField("id", StringType()),
     StructField("created_at", StringType()),
@@ -34,6 +36,7 @@ struct = StructType([
     StructField("location", StringType()),
 ])
 
+# Computation
 data_stream = data_stream_Raw.selectExpr("CAST(key AS STRING)", "CAST(value AS STRING)")
 
 data_stream_Parsed = data_stream.select(from_json("value", struct).alias("message"))
@@ -51,6 +54,7 @@ query = df.writeStream \
 
 
 def exportToPostgres():
+    # writing Data to postgres database
     df = spark.sql("select * from SpeedLayer")
 
     mode = "overwrite"

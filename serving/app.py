@@ -16,7 +16,7 @@ host = 'db'
 port = '5432'
 
 time.sleep(20)
-print("starting BL ....")
+print("starting SpL ....")
 
 #engine creation for postgres connection
 engine = create_engine('postgres://%s:%s@%s:%s/%s' % (user, pwd, host, port, db)) 
@@ -27,18 +27,8 @@ session = Session()
 
 conn = engine.connect()
 
-class BatchLayer(Base):
-    __tablename__ = 'BatchLayer'
-    location = Column(String, primary_key = True)
-    count = Column(Integer)
-
 class ServingLayer(Base):
     __tablename__ = 'ServingLayer'
-    location = Column(String, primary_key = True)
-    count = Column(Integer)
-
-class speedlayer(Base):
-    __tablename__ = 'speedlayer'
     location = Column(String, primary_key = True)
     count = Column(Integer)
 
@@ -47,27 +37,31 @@ metadata = MetaData()
 
 def check_connection():
     try:
+        # try to join tables for frontend
         print("yayy")
         conn.execute('''
-            batch_result as (SELECT
+            BEGIN;
+            DROP TABLE IF EXISTS "ServingLayer";
+            with batch_result2 as (SELECT
             "location", SUM("count") "count"
             FROM
             (
-                SELECT "location", "count"
-                FROM "BatchLayer"
-                UNION ALL
-                SELECT "location", "count"
-                FROM "speedlayer"
-                ) t
-                GROUP BY "location")
-                select *
-                INTO
-                "ServingLayer"
-                FROM
-                batch_result
-                ORDER BY
-                "count"
-                DESC; ''')
+            SELECT "location", "count"
+            FROM "BatchLayer"
+            UNION ALL
+            SELECT "location", "count"
+            FROM "speedlayer"
+            ) t
+            GROUP BY "location")
+            select *
+            INTO
+            "ServingLayer"
+            FROM
+            batch_result2
+            ORDER BY
+            "count"
+            DESC;
+            COMMIT; ''')
         session.commit()
     except:
         print('Test')

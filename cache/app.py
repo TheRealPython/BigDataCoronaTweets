@@ -44,7 +44,7 @@ while (x==False):
         #DB started
         Base = automap_base()
         Base.prepare(db.engine, reflect=True)
-        BatchLayer = Base.classes.speedlayer
+        ServingLayer_try = Base.classes.ServingLayer
         x = True
     except:
         #DB not started yet
@@ -59,21 +59,11 @@ print("Lets go")
 def home(): 
 
     print("okay")
-    result = db.session.query(BatchLayer).all()
-
-    print("nein")
-    y=0
-    lana = []
-    for row in result:
-        if y < 30:
-            print ("Name: ",row.location, "Address:",row.count)
-            y=y+1
-            lana.append(row.location)
-            lana.append(row.count)
-        else:
-            break
-    l=lana
+    conn = db.engine.connect() 
+    res = conn.execute('Select * FROM "ServingLayer" LIMIT 30;')
+    result = [{column: value for column, value in rowproxy.items()} for rowproxy in res]
     db.session.commit()
+    l = result
 
     return str(l)
 
