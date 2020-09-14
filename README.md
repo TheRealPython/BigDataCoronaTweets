@@ -46,4 +46,7 @@ A project to find locations where Corona is a hot topic based on Tweets, using a
 
 Incomplete Read Error: https://github.com/tweepy/tweepy/issues/448
 
+Bad Gateway in browser: Long initial Loading times will occur,  when initially starting the application (after using all Getting Started commands). This is due to the initial setup of all docker-containers and databases. After 1-5 Minutes there should be at least an Empty List (two braces: []) monitored in the browser window, instead of the previous Bad Gateway Error Message. 0-4 Minutes later when pressing F5 or reloading the browser there should be some Data rendered.
+
+
 by Ruben Härle, Tim Kauer, Jannik Kuom and Sven Metzger
