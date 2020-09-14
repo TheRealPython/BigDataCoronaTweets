@@ -111,4 +111,5 @@ def excecute_batch_layer(intervall=60):
         compute_data()
         print("sleeping ....")
 
-excecute_batch_layer(50)
+hourly = 60 * 60
+excecute_batch_layer(hourly)
